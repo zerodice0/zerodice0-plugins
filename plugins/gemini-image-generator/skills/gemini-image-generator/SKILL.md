@@ -121,9 +121,33 @@ Gemini 3 Pro Preview 모델을 호출합니다.
 
 **Gemini 실행 명령어:**
 
+> ⚠️ **중요**: 사용자가 `@경로` 형식으로 참조 이미지를 첨부한 경우, 반드시 해당 파일을 Gemini에게 전달해야 합니다.
+
+**1. 참조 이미지가 없는 경우:**
+
 ```bash
 gemini -y -m gemini-3-pro-preview "<프롬프트>"
 ```
+
+**2. 참조 이미지가 있는 경우 (@ 문법 사용):**
+
+Gemini CLI는 `@<파일경로>` 문법으로 이미지를 프롬프트에 첨부할 수 있습니다.
+
+```bash
+gemini -y -m gemini-3-pro-preview "다음 이미지를 참조하여 새로운 이미지를 생성해주세요. @<참조_이미지_경로> <프롬프트>"
+```
+
+**예시:**
+
+```bash
+# 단일 참조 이미지
+gemini -y -m gemini-3-pro-preview "다음 이미지의 스타일을 참조하여 로그인 아이콘을 생성해주세요. @./assets/reference.png 미니멀한 라인 아이콘 스타일"
+
+# 여러 참조 이미지
+gemini -y -m gemini-3-pro-preview "다음 이미지들을 참조하여 통일된 스타일의 아이콘 세트를 생성해주세요. @./assets/icon1.png @./assets/icon2.png 설정 아이콘"
+```
+
+> 📝 **참고**: 경로에 공백이 포함된 경우 백슬래시로 이스케이프합니다. (예: `@My\ Documents/image.png`)
 
 ---
 
@@ -153,8 +177,10 @@ ${CLAUDE_PLUGIN_ROOT}/scripts/resize-image.sh <input_image> <output_dir> <platfo
 기존 이미지를 참조하여 변형하는 경우:
 
 1. 참조 이미지 경로 확인 (예: `@assets/icon.png`)
-2. 이미지 내용을 Gemini에게 전달
+2. **`@` 문법을 사용하여 이미지 파일을 Gemini에게 전달**
 3. 사용자 요청에 따라 스타일 변형
+
+> ⚠️ **중요**: 이미지 변형 시 반드시 `@<파일경로>` 문법으로 원본 이미지를 Gemini에게 전달해야 합니다.
 
 **변형 프롬프트 구성:**
 
@@ -166,6 +192,32 @@ ${CLAUDE_PLUGIN_ROOT}/scripts/resize-image.sh <input_image> <output_dir> <platfo
 [주의사항]
 - 원본 이미지의 핵심 특징 유지
 - 요청된 스타일 변경만 적용
+```
+
+**Gemini 실행 명령어 (이미지 변형):**
+
+```bash
+gemini -y -m gemini-3-pro-preview "다음 이미지를 참조하여 변형해주세요. @<참조_이미지_경로>
+
+[변형 요청]
+{user_request}
+
+[주의사항]
+- 원본 이미지의 핵심 특징 유지
+- 요청된 스타일 변경만 적용"
+```
+
+**예시:**
+
+```bash
+# 스타일 변형
+gemini -y -m gemini-3-pro-preview "다음 아이콘을 더 둥근 스타일로 변형해주세요. @./assets/icon.png 모서리를 둥글게, 전체적으로 부드러운 느낌으로"
+
+# 색상 변경
+gemini -y -m gemini-3-pro-preview "다음 이미지의 색상을 변경해주세요. @./assets/logo.png 파란색 계열을 초록색 계열로 변경"
+
+# 여러 이미지 참조하여 새 이미지 생성
+gemini -y -m gemini-3-pro-preview "다음 두 이미지의 스타일을 조합하여 새로운 아이콘을 생성해주세요. @./ref1.png @./ref2.png 첫 번째의 형태 + 두 번째의 색감"
 ```
 
 ---
