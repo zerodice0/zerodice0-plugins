@@ -1,0 +1,25 @@
+{
+  "name": "gemini-image-generator",
+  "version": "1.0.0",
+  "description": "Generate app assets (icons, backgrounds, UI elements) using Gemini 3 Pro Preview model. Supports SVG, PNG, WebP formats and multi-resolution output for Flutter, iOS, Android, and Web platforms.",
+  "author": {
+    "name": "zerodice0"
+  },
+  "homepage": "https://github.com/zerodice0/zerodice0-plugins/tree/main/plugins/gemini-image-generator",
+  "repository": "https://github.com/zerodice0/zerodice0-plugins",
+  "keywords": [
+    "gemini",
+    "image",
+    "asset",
+    "icon",
+    "generator",
+    "ai",
+    "flutter",
+    "ios",
+    "android",
+    "web",
+    "svg",
+    "korean"
+  ],
+  "license": "MIT"
+}
