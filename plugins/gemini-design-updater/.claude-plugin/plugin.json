@@ -6,10 +6,7 @@
     "name": "zerodice0"
   },
   "homepage": "https://github.com/zerodice0/zerodice0-plugins/tree/main/plugins/gemini-design-updater",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zerodice0/zerodice0-plugins"
-  },
+  "repository": "https://github.com/zerodice0/zerodice0-plugins",
   "keywords": [
     "gemini",
     "design",
@@ -19,10 +16,5 @@
     "korean",
     "ai-assisted"
   ],
-  "license": "MIT",
-  "dependencies": {
-    "gemini-cli": "Required: gemini -y -m gemini-3-pro-preview",
-    "git": "2.0+",
-    "bash": "4.0+"
-  }
+  "license": "MIT"
 }
