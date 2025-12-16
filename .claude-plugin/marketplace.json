@@ -26,6 +26,17 @@
       },
       "category": "design",
       "tags": ["gemini", "design", "ai"]
+    },
+    {
+      "name": "gemini-image-generator",
+      "source": "./plugins/gemini-image-generator",
+      "description": "Generate app assets using Gemini 3 Pro Preview model",
+      "version": "1.0.0",
+      "author": {
+        "name": "zerodice0"
+      },
+      "category": "design",
+      "tags": ["gemini", "image", "asset", "generator", "ai"]
     }
   ]
 }
