@@ -1,6 +1,6 @@
 ---
 name: gemini-design-updater
-description: This skill should be used when the user asks to "update design with Gemini", "Gemini로 디자인 수정", "use Gemini for UI changes", "Gemini 디자인 업데이트", "AI design update", "Gemini로 UI 변경", or wants to delegate visual/UI updates to Gemini Pro with Claude review. Provides safe workflow with Git branch isolation, scope-based change tracking, and post-change review.
+description: This skill should be used when the user asks to "update design with Gemini", "Gemini로 디자인 수정", "use Gemini for UI changes", "Gemini 디자인 업데이트", "AI design update", "Gemini로 UI 변경", "use gemini-design-updater", "gemini-design-updater 사용", "/gemini-design-updater", "gemini-design-updater skill", "gemini-design-updater 스킬", "디자인 스킬", "gemini 디자인 스킬", "디자인 업데이트 스킬", or wants to delegate visual/UI updates to Gemini Pro with Claude review. Provides safe workflow with Git branch isolation, scope-based change tracking, and post-change review.
 ---
 
 # Gemini Design Updater
