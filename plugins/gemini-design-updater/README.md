@@ -27,10 +27,20 @@ A Claude Code skill that enables safe design updates using Gemini Pro with autom
 
 ### Usage
 
-1. Invoke the skill by asking Claude to update design with Gemini:
-   ```
-   @src/components/Button.tsx#L20-50 이 버튼을 Gemini로 모던하게 바꿔줘
-   ```
+**Method 1: Slash Command (Recommended)**
+```
+/gemini-design
+```
+
+**Method 2: Natural Language**
+```
+gemini-design 스킬 사용해줘
+```
+
+**Method 3: With Scope**
+```
+@src/components/Button.tsx#L20-50 이 버튼을 Gemini로 모던하게 바꿔줘
+```
 
 2. Claude will:
    - Create a work branch
@@ -84,10 +94,20 @@ Gemini Pro를 활용하여 디자인을 안전하게 업데이트하는 Claude C
 
 ### 사용법
 
-1. Claude에게 Gemini로 디자인 업데이트를 요청합니다:
-   ```
-   @src/components/Button.tsx#L20-50 이 버튼을 Gemini로 모던하게 바꿔줘
-   ```
+**방법 1: 슬래시 명령어 (권장)**
+```
+/gemini-design
+```
+
+**방법 2: 자연어로 호출**
+```
+gemini-design 스킬 사용해줘
+```
+
+**방법 3: 범위와 함께 호출**
+```
+@src/components/Button.tsx#L20-50 이 버튼을 Gemini로 모던하게 바꿔줘
+```
 
 2. Claude가 다음을 수행합니다:
    - 작업 브랜치 생성

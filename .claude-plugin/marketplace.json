@@ -20,7 +20,7 @@
       "name": "gemini-design-updater",
       "source": "./plugins/gemini-design-updater",
       "description": "Safe design update workflow using Gemini Pro with Claude review",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "zerodice0"
       },
