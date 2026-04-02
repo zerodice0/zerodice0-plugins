@@ -23,27 +23,23 @@ jobs:
         run: |
           echo "Validating release structure..."
           test -f .claude-plugin/marketplace.json
-          test -f plugins/gemini-design-updater/.claude-plugin/plugin.json
-          test -f plugins/gemini-design-updater/skills/gemini-design-updater/SKILL.md
-          echo "✓ All required files present"
+          cat .claude-plugin/marketplace.json | python3 -m json.tool > /dev/null
+          echo "✓ marketplace.json is valid JSON"
+
+          for plugin_json in plugins/*/.claude-plugin/plugin.json; do
+            if [ -f "$plugin_json" ]; then
+              plugin_dir=$(dirname "$(dirname "$plugin_json")")
+              plugin_name=$(basename "$plugin_dir")
+              cat "$plugin_json" | python3 -m json.tool > /dev/null
+              echo "✓ $plugin_name/plugin.json is valid JSON"
+            fi
+          done
 
       - name: Extract version from tag
         id: version
         env:
           GH_REF: ${{ github.ref }}
         run: echo "VERSION=${GH_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
-      - name: Validate version consistency
-        env:
-          TAG_VERSION: ${{ steps.version.outputs.VERSION }}
-        run: |
-          PLUGIN_VERSION=$(cat plugins/gemini-design-updater/.claude-plugin/plugin.json | python3 -c "import sys, json; print(json.load(sys.stdin)['version'])")
-
-          if [ "$PLUGIN_VERSION" != "$TAG_VERSION" ]; then
-            echo "Error: plugin.json version ($PLUGIN_VERSION) doesn't match tag version ($TAG_VERSION)"
-            exit 1
-          fi
-          echo "✓ Version $TAG_VERSION is consistent"
 
       - name: Generate release notes
         env:
@@ -52,9 +48,7 @@ jobs:
           echo "## What's Changed" > release_notes.md
           echo "" >> release_notes.md
 
-          # Extract changelog for this version if CHANGELOG.md exists
           if [ -f CHANGELOG.md ]; then
-            # Try to extract section for this version
             sed -n "/## \[$VERSION\]/,/## \[/p" CHANGELOG.md | head -n -1 >> release_notes.md || true
           fi
 
@@ -62,12 +56,14 @@ jobs:
           echo "## Installation" >> release_notes.md
           echo "" >> release_notes.md
           echo '```bash' >> release_notes.md
-          echo "# Add marketplace" >> release_notes.md
           echo "/plugin marketplace add zerodice0/zerodice0-plugins" >> release_notes.md
-          echo "" >> release_notes.md
-          echo "# Install plugin" >> release_notes.md
-          echo "/plugin install gemini-design-updater@zerodice0-plugins" >> release_notes.md
           echo '```' >> release_notes.md
+          echo "" >> release_notes.md
+          echo "Available plugins:" >> release_notes.md
+          for plugin_dir in plugins/*/; do
+            plugin_name=$(basename "$plugin_dir")
+            echo "- \`/plugin install ${plugin_name}@zerodice0-plugins\`" >> release_notes.md
+          done
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

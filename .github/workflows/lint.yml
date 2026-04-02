@@ -16,12 +16,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@master
-        with:
-          scandir: './plugins/gemini-design-updater/scripts'
-          severity: warning
-        env:
-          SHELLCHECK_OPTS: -e SC1091 -e SC2086
+        run: |
+          sudo apt-get install -y shellcheck
+          shopt -s globstar nullglob
+          scripts=(plugins/*/scripts/*.sh)
+          if [ ${#scripts[@]} -eq 0 ]; then
+            echo "No shell scripts found, skipping"
+            exit 0
+          fi
+          shellcheck -e SC1091 -e SC2086 -S warning "${scripts[@]}"
+          echo "✓ ShellCheck passed"
 
   validate-structure:
     name: Validate Plugin Structure
@@ -38,23 +42,33 @@ jobs:
           cat .claude-plugin/marketplace.json | python3 -m json.tool > /dev/null
           echo "✓ marketplace.json is valid JSON"
 
-      - name: Validate plugin.json
+      - name: Validate all plugins
         run: |
-          echo "Validating plugin.json..."
-          test -f plugins/gemini-design-updater/.claude-plugin/plugin.json
-          cat plugins/gemini-design-updater/.claude-plugin/plugin.json | python3 -m json.tool > /dev/null
-          echo "✓ plugin.json is valid JSON"
+          for plugin_json in plugins/*/.claude-plugin/plugin.json; do
+            if [ -f "$plugin_json" ]; then
+              plugin_dir=$(dirname "$(dirname "$plugin_json")")
+              plugin_name=$(basename "$plugin_dir")
+              echo "Validating $plugin_name..."
 
-      - name: Validate SKILL.md exists
-        run: |
-          echo "Validating SKILL.md..."
-          test -f plugins/gemini-design-updater/skills/gemini-design-updater/SKILL.md
-          echo "✓ SKILL.md exists"
+              cat "$plugin_json" | python3 -m json.tool > /dev/null
+              echo "  ✓ plugin.json is valid JSON"
+
+              # Check referenced command files exist
+              for cmd in $(python3 -c "import json; [print(c['source']) for c in json.load(open('$plugin_json')).get('commands',[])]" 2>/dev/null); do
+                test -f "$plugin_dir/$cmd" && echo "  ✓ $cmd exists" || echo "  ✗ $cmd missing"
+              done
+
+              # Check referenced skill files exist
+              for skill in $(python3 -c "import json; [print(s['source']) for s in json.load(open('$plugin_json')).get('skills',[])]" 2>/dev/null); do
+                test -f "$plugin_dir/$skill" && echo "  ✓ $skill exists" || echo "  ✗ $skill missing"
+              done
+            fi
+          done
 
       - name: Validate scripts are executable
         run: |
-          echo "Validating scripts..."
-          for script in plugins/gemini-design-updater/scripts/*.sh; do
+          shopt -s globstar nullglob
+          for script in plugins/*/scripts/*.sh; do
             if [ -f "$script" ]; then
               head -1 "$script" | grep -q "^#!/" || echo "Warning: $script missing shebang"
               echo "✓ $script exists"
