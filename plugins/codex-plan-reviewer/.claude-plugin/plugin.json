@@ -1,6 +1,6 @@
 {
   "name": "codex-plan-reviewer",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Plan agent로 구현 계획을 수립하고, Codex 리뷰를 받아 최종 계획을 완성하고, 태스크별로 Codex에 위임하여 실행하는 워크플로우",
   "author": {
     "name": "zerodice0"
