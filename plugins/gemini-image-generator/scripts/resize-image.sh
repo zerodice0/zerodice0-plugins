@@ -94,8 +94,10 @@ get_image_size() {
     if [[ "$RESIZE_TOOL" == "imagemagick" ]]; then
         identify -format "%wx%h" "$img" 2>/dev/null
     else
-        local w=$(sips -g pixelWidth "$img" 2>/dev/null | tail -1 | awk '{print $2}')
-        local h=$(sips -g pixelHeight "$img" 2>/dev/null | tail -1 | awk '{print $2}')
+        local w
+        w=$(sips -g pixelWidth "$img" 2>/dev/null | tail -1 | awk '{print $2}')
+        local h
+        h=$(sips -g pixelHeight "$img" 2>/dev/null | tail -1 | awk '{print $2}')
         echo "${w}x${h}"
     fi
 }
@@ -107,13 +109,16 @@ resize_image() {
     local scale="$3"
 
     # 원본 크기 가져오기
-    local size=$(get_image_size "$input")
+    local size
+    size=$(get_image_size "$input")
     local orig_w="${size%x*}"
     local orig_h="${size#*x}"
 
     # 새 크기 계산
-    local new_w=$(echo "$orig_w * $scale" | bc | cut -d. -f1)
-    local new_h=$(echo "$orig_h * $scale" | bc | cut -d. -f1)
+    local new_w
+    new_w=$(echo "$orig_w * $scale" | bc | cut -d. -f1)
+    local new_h
+    new_h=$(echo "$orig_h * $scale" | bc | cut -d. -f1)
 
     # 출력 디렉토리 생성
     mkdir -p "$(dirname "$output")"
@@ -138,7 +143,8 @@ resize_with_base() {
     local scale="$3"
     local base="$4"
 
-    local new_size=$(echo "$base * $scale" | bc | cut -d. -f1)
+    local new_size
+    new_size=$(echo "$base * $scale" | bc | cut -d. -f1)
 
     mkdir -p "$(dirname "$output")"
 
