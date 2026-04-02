@@ -1,0 +1,34 @@
+{
+  "name": "codex-plan-reviewer",
+  "version": "1.1.0",
+  "description": "Plan agent로 구현 계획을 수립하고, Codex 리뷰를 받아 최종 계획을 완성하고, 태스크별로 Codex에 위임하여 실행하는 워크플로우",
+  "author": {
+    "name": "zerodice0"
+  },
+  "homepage": "https://github.com/zerodice0/zerodice0-plugins/tree/main/plugins/codex-plan-reviewer",
+  "repository": "https://github.com/zerodice0/zerodice0-plugins",
+  "keywords": [
+    "codex",
+    "plan",
+    "review",
+    "workflow",
+    "korean"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "source": "commands/codex-plan.md"
+    },
+    {
+      "source": "commands/codex-plan-execute.md"
+    }
+  ],
+  "skills": [
+    {
+      "source": "skills/codex-plan-review/SKILL.md"
+    },
+    {
+      "source": "skills/codex-execute-plan/SKILL.md"
+    }
+  ]
+}

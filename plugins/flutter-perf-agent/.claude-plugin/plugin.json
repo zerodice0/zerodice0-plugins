@@ -1,0 +1,12 @@
+{
+  "name": "flutter-perf-agent",
+  "version": "3.0.0",
+  "description": "Flutter performance analysis agent using Dart VM Service direct integration. Supports launch-first cold-start profiling and attach mode with startup markers, timeline hotspots, memory trend analysis, and comprehensive frame timing (P50/P90/P95/P99).",
+  "author": {
+    "name": "zerodice0"
+  },
+  "homepage": "https://github.com/zerodice0/zerodice0-plugins/tree/main/plugins/flutter-perf-agent",
+  "repository": "https://github.com/zerodice0/zerodice0-plugins",
+  "keywords": ["flutter", "performance", "dart", "vm-service", "analysis", "agent"],
+  "license": "MIT"
+}

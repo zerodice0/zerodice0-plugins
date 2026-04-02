@@ -37,6 +37,28 @@
       },
       "category": "design",
       "tags": ["gemini", "image", "asset", "generator", "ai"]
+    },
+    {
+      "name": "flutter-perf-agent",
+      "source": "./plugins/flutter-perf-agent",
+      "description": "Flutter performance analysis agent with fdemon + Dart VM Service integration",
+      "version": "1.0.0",
+      "author": {
+        "name": "zerodice0"
+      },
+      "category": "development",
+      "tags": ["flutter", "performance", "fdemon", "vm-service"]
+    },
+    {
+      "name": "codex-plan-reviewer",
+      "source": "./plugins/codex-plan-reviewer",
+      "description": "Plan agent로 구현 계획을 수립하고, Codex 리뷰를 받아 최종 계획을 완성하는 워크플로우",
+      "version": "1.0.0",
+      "author": {
+        "name": "zerodice0"
+      },
+      "category": "development",
+      "tags": ["codex", "plan", "review", "workflow"]
     }
   ]
 }
